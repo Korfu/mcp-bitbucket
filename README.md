@@ -58,30 +58,12 @@ BITBUCKET_WORKSPACE=your_workspace_name
 
 Add the following configuration to your Cursor MCP settings:
 
-**For macOS/Linux:**
 ```json
 {
   "mcpServers": {
     "bitbucket": {
-      "command": "node",
-      "args": ["/path/to/BitbucketMCP/dist/index.js"],
-      "env": {
-        "BITBUCKET_USERNAME": "your_bitbucket_username",
-        "BITBUCKET_APP_PASSWORD": "your_app_password",
-        "BITBUCKET_WORKSPACE": "your_workspace_name"
-      }
-    }
-  }
-}
-```
-
-**For Windows:**
-```json
-{
-  "mcpServers": {
-    "bitbucket": {
-      "command": "node.exe",
-      "args": ["C:\\path\\to\\BitbucketMCP\\dist\\index.js"],
+      "command": "npx",
+      "args": ["@korfu/bitbucket-mcp"],
       "env": {
         "BITBUCKET_USERNAME": "your_bitbucket_username",
         "BITBUCKET_APP_PASSWORD": "your_app_password",
