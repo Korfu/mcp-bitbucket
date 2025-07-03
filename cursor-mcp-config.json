@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "bitbucket": {
-      "command": "node",
-      "args": ["/absolute/path/to/BitbucketMCP/dist/index.js"],
+      "command": "npx",
+      "args": ["@korfu/bitbucket-mcp"],
       "env": {
         "BITBUCKET_USERNAME": "your_bitbucket_username",
         "BITBUCKET_APP_PASSWORD": "your_app_password",

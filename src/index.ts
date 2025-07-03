@@ -71,17 +71,13 @@ class BitbucketMCPServer {
   private axiosInstance: AxiosInstance;
 
   constructor() {
-    this.server = new Server(
-      {
-        name: 'bitbucket-mcp',
-        version: '1.0.0',
+    this.server = new Server({
+      name: 'bitbucket-mcp',
+      version: '1.0.0',
+      capabilities: {
+        tools: {},
       },
-      {
-        capabilities: {
-          tools: {},
-        },
-      }
-    );
+    });
 
     // Validate environment variables
     this.config = ConfigSchema.parse({
@@ -126,7 +122,7 @@ class BitbucketMCPServer {
               },
             },
           },
-        } as ToolSchema,
+        },
         {
           name: 'get_repository_commits',
           description: 'Get commit information for a specific repository',
@@ -147,7 +143,7 @@ class BitbucketMCPServer {
             },
             required: ['repository_name'],
           },
-        } as ToolSchema,
+        },
         {
           name: 'get_repository_details',
           description: 'Get detailed information about a specific repository including latest commit info',
@@ -161,7 +157,7 @@ class BitbucketMCPServer {
             },
             required: ['repository_name'],
           },
-        } as ToolSchema,
+        },
       ],
     }));
 
