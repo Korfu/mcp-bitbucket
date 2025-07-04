@@ -1,6 +1,6 @@
 {
   "name": "@korfu/bitbucket-mcp",
-  "version": "1.0.2",upda
+  "version": "1.0.2",
   "description": "MCP server for Bitbucket Cloud integration",
   "main": "dist/index.js",
   "bin": "dist/index.js",
