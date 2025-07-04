@@ -9,6 +9,11 @@ A Model Context Protocol (MCP) server that integrates Cursor IDE with Bitbucket 
 - **Commit Information**: Retrieve commit history and latest commit details
 - **Commit Counts**: Get total commit counts per repository
 - **Latest Commit Data**: Fetch the most recent commit date, author, and message for each repository
+- **Workspaces**: List all available workspaces.
+- **Pull Requests**: Create, view, list, and update pull requests.
+- **Projects**: View project details and list default reviewers.
+- **Branch Restrictions**: Manage branch restrictions for projects and repositories.
+- **Commits**: Retrieve individual commits and lists of commits.
 
 ## Prerequisites
 
@@ -82,46 +87,61 @@ After adding the configuration, restart Cursor IDE to load the MCP server.
 
 Once configured, you can use the following tools in Cursor:
 
-### 1. List Repositories
-```
-List all repositories in my Bitbucket workspace
-```
-or
-```
-List repositories with commit information
-```
+### Workspaces
+- `bitbucket_list_workspaces`
 
-### 2. Get Repository Details
-```
-Get details for repository "my-repo-name"
-```
+### Repositories
+- `bitbucket_list_repositories`
+- `bitbucket_get_repository_details`
 
-### 3. Get Repository Commits
-```
-Show recent commits for repository "my-repo-name"
-```
+### Commits
+- `bitbucket_list_commits`
+- `bitbucket_get_commit`
+
+### Pull Requests
+- `bitbucket_list_pull_requests`
+- `bitbucket_get_pull_request`
+- `bitbucket_create_pull_request`
+- `bitbucket_update_pull_request`
+
+### Projects
+- `bitbucket_get_project`
+- `bitbucket_list_default_reviewers`
+
+### Branch Restrictions
+- `bitbucket_list_branch_restrictions`
+- `bitbucket_get_branch_restriction`
+- `bitbucket_update_repository_branching_model_settings`
+- `bitbucket_update_project_branching_model_settings`
 
 ## Available Tools
 
-### `list_repositories`
-Lists all repositories in your Bitbucket workspace.
+### Workspaces
+- **list_workspaces**: Lists all workspaces accessible by the current user.
 
-**Parameters:**
-- `include_commit_info` (boolean, optional): Include commit count and latest commit info
-- `limit` (number, optional): Maximum repositories to return (default: 50, max: 100)
+### Repositories
+- **list_repositories**: Lists all repositories in the configured Bitbucket workspace.
+- **get_repository_details**: Get detailed information about a specific repository including latest commit info.
 
-### `get_repository_commits`
-Gets commit history for a specific repository.
+### Commits
+- **list_commits**: Get commit information for a specific repository.
+- **get_commit**: Get a single commit by its hash.
 
-**Parameters:**
-- `repository_name` (string, required): Name of the repository
-- `limit` (number, optional): Maximum commits to return (default: 50, max: 100)
+### Pull Requests
+- **list_pull_requests**: List all pull requests in a repository.
+- **get_pull_request**: Get a single pull request by its ID.
+- **create_pull_request**: Create a new pull request.            //Beta version - untested
+- **update_pull_request**: Update an existing pull request.      //Beta version - untested
 
-### `get_repository_details`
-Gets detailed information about a specific repository including latest commit data.
+### Projects
+- **get_project**: Get a single project by its key.
+- **list_default_reviewers**: List default reviewers for a project.
 
-**Parameters:**
-- `repository_name` (string, required): Name of the repository
+### Branch Restrictions
+- **list_branch_restrictions**: List all branch restrictions for a repository.
+- **get_branch_restriction**: Get a single branch restriction by its ID.
+- **update_repository_branching_model_settings**: Update the branching model configuration for a repository. //Beta version - untested
+- **update_project_branching_model_settings**: Update the branching model configuration for a project.       //Beta version - untested
 
 ## Development
 

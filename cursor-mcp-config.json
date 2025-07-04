@@ -4,8 +4,8 @@
       "command": "npx",
       "args": ["@korfu/bitbucket-mcp"],
       "env": {
-        "BITBUCKET_USERNAME": "your_bitbucket_username",
-        "BITBUCKET_APP_PASSWORD": "your_app_password",
+        "BITBUCKET_USERNAME": "your_bitbucket_username_not_email",
+        "BITBUCKET_APP_PASSWORD": "your_app_password_not_token",
         "BITBUCKET_WORKSPACE": "your_workspace_name"
       }
     }
