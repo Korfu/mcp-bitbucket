@@ -4,7 +4,7 @@ import {
   BitbucketRepository,
   BitbucketCommit,
   Config,
-} from '../types';
+} from '../../types';
 
 export const getRepositoryDetailsTool = {
   name: 'get_repository_details',

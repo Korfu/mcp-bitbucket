@@ -52,4 +52,22 @@ export interface RepositoryWithCommitInfo extends BitbucketRepository {
   latest_commit_hash?: string;
   latest_commit_message?: string;
   latest_commit_author?: string;
+}
+
+export interface BranchingModelSettingsBranch {
+  enabled?: boolean;
+  name?: string | null;
+  use_mainbranch?: boolean;
+}
+
+export interface BranchingModelSettingsBranchType {
+  kind: 'release' | 'hotfix' | 'feature' | 'bugfix';
+  enabled?: boolean;
+  prefix?: string;
+}
+
+export interface BranchingModelSettings {
+  development?: BranchingModelSettingsBranch;
+  production?: BranchingModelSettingsBranch;
+  branch_types?: BranchingModelSettingsBranchType[];
 } 

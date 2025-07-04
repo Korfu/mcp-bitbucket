@@ -13,15 +13,23 @@ import { Config, ConfigSchema } from './types.js';
 import {
   listRepositories,
   listRepositoriesTool,
-} from './tools/listRepositories.js';
+} from './tools/repositories/listRepositories.js';
 import {
   getRepositoryCommits,
   getRepositoryCommitsTool,
-} from './tools/getRepositoryCommits.js';
+} from './tools/repositories/getRepositoryCommits.js';
 import {
   getRepositoryDetails,
   getRepositoryDetailsTool,
-} from './tools/getRepositoryDetails.js';
+} from './tools/repositories/getRepositoryDetails.js';
+import {
+  updateRepositoryBranchingModelSettings,
+  updateRepositoryBranchingModelSettingsTool,
+} from './tools/branch-restrictions/updateRepositoryBranchingModelSettings.js';
+import {
+  updateProjectBranchingModelSettings,
+  updateProjectBranchingModelSettingsTool,
+} from './tools/branch-restrictions/updateProjectBranchingModelSettings.js';
 
 class BitbucketMCPServer {
   private server: Server;
@@ -63,6 +71,8 @@ class BitbucketMCPServer {
         listRepositoriesTool,
         getRepositoryCommitsTool,
         getRepositoryDetailsTool,
+        updateRepositoryBranchingModelSettingsTool,
+        updateProjectBranchingModelSettingsTool,
       ],
     }));
 
@@ -72,7 +82,11 @@ class BitbucketMCPServer {
         const args = request.params.arguments || {};
         switch (request.params.name) {
           case 'list_repositories':
-            return await listRepositories(this.axiosInstance, this.config, args);
+            return await listRepositories(
+              this.axiosInstance,
+              this.config,
+              args
+            );
           case 'get_repository_commits':
             return await getRepositoryCommits(
               this.axiosInstance,
@@ -81,6 +95,18 @@ class BitbucketMCPServer {
             );
           case 'get_repository_details':
             return await getRepositoryDetails(
+              this.axiosInstance,
+              this.config,
+              args
+            );
+          case 'update_repository_branching_model_settings':
+            return await updateRepositoryBranchingModelSettings(
+              this.axiosInstance,
+              this.config,
+              args
+            );
+          case 'update_project_branching_model_settings':
+            return await updateProjectBranchingModelSettings(
               this.axiosInstance,
               this.config,
               args

@@ -3,7 +3,7 @@ import {
   BitbucketPaginatedResponse,
   BitbucketCommit,
   Config,
-} from '../types';
+} from '../../types';
 
 export const getRepositoryCommitsTool = {
   name: 'get_repository_commits',

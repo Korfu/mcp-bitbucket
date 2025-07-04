@@ -5,7 +5,7 @@ import {
   BitbucketCommit,
   RepositoryWithCommitInfo,
   Config,
-} from '../types';
+} from '../../types';
 
 export const listRepositoriesTool = {
   name: 'list_repositories',
