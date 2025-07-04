@@ -7,21 +7,24 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import axios, { AxiosInstance } from 'axios';
-import { z } from 'zod';
 import { CallToolRequest } from '@modelcontextprotocol/sdk/types.js';
 import { Config, ConfigSchema } from './types.js';
+
+// Repositories
 import {
   listRepositories,
   listRepositoriesTool,
 } from './tools/repositories/listRepositories.js';
 import {
-  getRepositoryCommits,
-  getRepositoryCommitsTool,
-} from './tools/repositories/getRepositoryCommits.js';
-import {
   getRepositoryDetails,
   getRepositoryDetailsTool,
 } from './tools/repositories/getRepositoryDetails.js';
+
+// Commits
+import { listCommits, listCommitsTool } from './tools/commits/listCommits.js';
+import { getCommit, getCommitTool } from './tools/commits/getCommit.js';
+
+// Branching Model
 import {
   updateRepositoryBranchingModelSettings,
   updateRepositoryBranchingModelSettingsTool,
@@ -30,6 +33,45 @@ import {
   updateProjectBranchingModelSettings,
   updateProjectBranchingModelSettingsTool,
 } from './tools/branch-restrictions/updateProjectBranchingModelSettings.js';
+import {
+  listBranchRestrictions,
+  listBranchRestrictionsTool,
+} from './tools/branch-restrictions/listBranchRestrictions.js';
+import {
+  getBranchRestriction,
+  getBranchRestrictionTool,
+} from './tools/branch-restrictions/getBranchRestriction.js';
+
+// Projects
+import { getProject, getProjectTool } from './tools/projects/getProject.js';
+import {
+  listDefaultReviewers,
+  listDefaultReviewersTool,
+} from './tools/projects/listDefaultReviewers.js';
+
+// Pull Requests
+import {
+  listPullRequests,
+  listPullRequestsTool,
+} from './tools/pull-requests/listPullRequests.js';
+import {
+  getPullRequest,
+  getPullRequestTool,
+} from './tools/pull-requests/getPullRequest.js';
+import {
+  createPullRequest,
+  createPullRequestTool,
+} from './tools/pull-requests/createPullRequest.js';
+import {
+  updatePullRequest,
+  updatePullRequestTool,
+} from './tools/pull-requests/updatePullRequest.js';
+
+// Workspaces
+import {
+  listWorkspaces,
+  listWorkspacesTool,
+} from './tools/workspaces/listWorkspaces.js';
 
 class BitbucketMCPServer {
   private server: Server;
@@ -68,11 +110,27 @@ class BitbucketMCPServer {
   private setupHandlers(): void {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => ({
       tools: [
+        // Repositories
         listRepositoriesTool,
-        getRepositoryCommitsTool,
         getRepositoryDetailsTool,
+        // Commits
+        listCommitsTool,
+        getCommitTool,
+        // Branching Model
         updateRepositoryBranchingModelSettingsTool,
         updateProjectBranchingModelSettingsTool,
+        listBranchRestrictionsTool,
+        getBranchRestrictionTool,
+        // Projects
+        getProjectTool,
+        listDefaultReviewersTool,
+        // Pull Requests
+        listPullRequestsTool,
+        getPullRequestTool,
+        createPullRequestTool,
+        updatePullRequestTool,
+        // Workspaces
+        listWorkspacesTool,
       ],
     }));
 
@@ -80,39 +138,44 @@ class BitbucketMCPServer {
       CallToolRequestSchema,
       async (request: CallToolRequest) => {
         const args = request.params.arguments || {};
-        switch (request.params.name) {
-          case 'list_repositories':
-            return await listRepositories(
-              this.axiosInstance,
-              this.config,
-              args
-            );
-          case 'get_repository_commits':
-            return await getRepositoryCommits(
-              this.axiosInstance,
-              this.config,
-              args
-            );
-          case 'get_repository_details':
-            return await getRepositoryDetails(
-              this.axiosInstance,
-              this.config,
-              args
-            );
-          case 'update_repository_branching_model_settings':
-            return await updateRepositoryBranchingModelSettings(
-              this.axiosInstance,
-              this.config,
-              args
-            );
-          case 'update_project_branching_model_settings':
-            return await updateProjectBranchingModelSettings(
-              this.axiosInstance,
-              this.config,
-              args
-            );
-          default:
-            throw new Error(`Unknown tool: ${request.params.name}`);
+        const { name } = request.params;
+        const handlers: Record<
+          string,
+          (
+            axiosInstance: AxiosInstance,
+            config: Config,
+            args: any
+          ) => Promise<{ content: Array<{ type: string; text: string }> }>
+        > = {
+          // Repositories
+          list_repositories: listRepositories,
+          get_repository_details: getRepositoryDetails,
+          // Commits
+          list_commits: listCommits,
+          get_commit: getCommit,
+          // Branching Model
+          update_repository_branching_model_settings:
+            updateRepositoryBranchingModelSettings,
+          update_project_branching_model_settings:
+            updateProjectBranchingModelSettings,
+          list_branch_restrictions: listBranchRestrictions,
+          get_branch_restriction: getBranchRestriction,
+          // Projects
+          get_project: getProject,
+          list_default_reviewers: listDefaultReviewers,
+          // Pull Requests
+          list_pull_requests: listPullRequests,
+          get_pull_request: getPullRequest,
+          create_pull_request: createPullRequest,
+          update_pull_request: updatePullRequest,
+          // Workspaces
+          list_workspaces: listWorkspaces,
+        };
+
+        if (name in handlers) {
+          return await handlers[name](this.axiosInstance, this.config, args);
+        } else {
+          throw new Error(`Unknown tool: ${name}`);
         }
       }
     );

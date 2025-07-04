@@ -5,8 +5,8 @@ import {
   Config,
 } from '../../types';
 
-export const getRepositoryCommitsTool = {
-  name: 'get_repository_commits',
+export const listCommitsTool = {
+  name: 'list_commits',
   description: 'Get commit information for a specific repository',
   inputSchema: {
     type: 'object',
@@ -28,7 +28,7 @@ export const getRepositoryCommitsTool = {
   },
 };
 
-export async function getRepositoryCommits(
+export async function listCommits(
   axiosInstance: AxiosInstance,
   config: Config,
   args: any
