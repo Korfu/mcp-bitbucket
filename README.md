@@ -36,24 +36,24 @@ npm install
 npm run build
 ```
 
-### 3. Create Bitbucket App Password
+### 3. Create Atlassian API token*
+* if you already have a token for Jira or Confluence, you can reuse it *
 
 1. Go to your Bitbucket account settings
 2. Navigate to "App passwords" under "Access management"
-3. Click "Create app password"
-4. Give it a descriptive name (e.g., "Cursor MCP Integration")
-5. Select the following permissions:
-   - **Repositories**: Read
-   - **Account**: Read (optional, for user info)
-6. Copy the generated app password
+3. Instead of clicking "Create app password" (outdated), navigate to "Go to API tokens"
+4. Create an API token 
+5. Give it a descriptive name (e.g., "Cursor MCP Integration")
+6. Select expiry date
+7. Copy the generated token
 
 ### 4. Configure Environment Variables
 
 Create a `.env` file in the project root:
 
 ```bash
-BITBUCKET_USERNAME=your_bitbucket_username
-BITBUCKET_APP_PASSWORD=your_app_password_from_step_3
+BITBUCKET_USERNAME=your_bitbucket_email_address
+BITBUCKET_APP_PASSWORD=your_api_token
 BITBUCKET_WORKSPACE=your_workspace_name
 ```
 
