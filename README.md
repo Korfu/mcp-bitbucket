@@ -70,8 +70,8 @@ Add the following configuration to your Cursor MCP settings:
       "command": "npx",
       "args": ["@korfu/bitbucket-mcp"],
       "env": {
-        "BITBUCKET_USERNAME": "your_bitbucket_username",
-        "BITBUCKET_APP_PASSWORD": "your_app_password",
+        "BITBUCKET_USERNAME": "your_bitbucket_email_address",
+        "BITBUCKET_APP_PASSWORD": "your_api_token",
         "BITBUCKET_WORKSPACE": "your_workspace_name"
       }
     }
